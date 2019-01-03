@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP|Raleway|Cinzel+Decorative|Raleway+Dots');
+
+@page {
+    margin: 10mm;
+    margin-top: 15mm;
+    margin-bottom: 15mm;
+    size: A5;
+}
+
+.pagedjs_page {
+    outline: 1px solid orange;
+}
+.break-before {
+    page-break-before: always;
+    break-before: column;
+    background: antiquewhite;    
+}
+
+@page :first {
+    @bottom-left {
+        content: "";
+    }
+}
+
+@page :left {
+    @bottom-left {
+        content: counter(page);
+    }
+}
+
+@page :right {
+    @bottom-right {
+        content: counter(page);
+    }
+}
+
+@media only screen{
+    /* body {
+        width: 35em;
+        margin: auto;
+    } */
+}
+
+body {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9.5pt;
+    background-color: aliceblue;
+    overflow-wrap: break-word;
+}
+
+.not-ready {
+    background-color: red !important;
+}
+
+.pagedjs_page {
+    background: white;
+}
+
+img {
+    max-height: 20em;
+    object-fit: contain;
+    width: 110%;
+    margin-left: -5%;
+}
+
+p {
+    orphans: 2;
+    widows: 2;
+}
+
+a {
+    border-bottom: 1px #cacaca solid;
+    color: black;
+    text-decoration: none;
+}
+
+/* a:after {
+    content: " (" attr(href) ")";
+    display: inline-block;
+    float: right;
+    font-size: 50%;
+    height: 2em;
+    width: 50%;
+} */
+
+ol, ul {
+    padding-left: 1em;
+}
+
+pre {
+    font-size: 70%;
+    border-right: 2px dashed silver;
+    display: block;
+}
+
+pre code {
+    overflow-wrap: initial;
+}
+
+p code {
+    overflow-wrap: break-word;
+}
+
+h2.printOnly {
+    display: none;
+}
+ol.printOnly {
+    border-top: 0.3mm solid silver;
+    font-size: 80%;
+    margin-top: 1em;
+    padding: 0;
+}
+.printOnly li {
+    margin-left: 1.5em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+blockquote {
+    font-family: 'Raleway', sans-serif;
+    font-size: 115%;
+    margin-left: -5%;
+    margin-right: 0;
+    width: 110%;
+}
+blockquote cite {
+    font-size: 80%;
+    font-style: initial;
+    font-weight: bold;
+}
+
+ol {
+    margin-top: 0;
+}
+
+figure {
+    width: 100%;
+    margin: 0;
+}
+
+.edition {
+    /* float: right; */
+    display: block;
+    /* width: 17em; */
+    text-align: right;
+}
+
+.qr {
+    float: right;
+    width: 30%;
+}
+
+.the-articles {
+    line-height: 1.4;
+}
+
+.the-articles > article {
+    column-count: 2;
+    column-gap: 3em;
+}
+
+.toc {
+    border-bottom: 0.3mm solid black;
+    column-count: 2;
+    column-gap: 5em;
+    column-rule: 0.3mm solid black;
+    padding-bottom: 2em;
+}
+.toc a {
+    text-decoration: none;
+    border: none;
+}
+.toc a::after {
+    content: " (p" target-counter(attr(href), page ) ")";
+}
+span.time-to-read {
+    display: inline-block;
+    font-size: 80%;
+    opacity: .8;
+}
+
+.name-title {
+    border-bottom: 0.5mm solid black;
+    column-span: all;
+    font-family: 'Raleway Dots', cursive;
+    font-size: 500%;
+    margin-bottom: 5mm;
+    padding-bottom: 10mm;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Raleway', sans-serif;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+h1.article-title {
+    column-span: all;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 2em;
+    display: block;
+    page-break-inside: avoid;
+}
+.excerpt {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    font-size: 1.25em; 
+    margin-bottom: 1em;
+    margin: 0.8em 0;
+    padding: 0.5em 0;
+}
+.top-meta {
+    font-size: 80%;
+    margin-bottom: 1em;
+    text-align: center;
+}
+/* .date {} */
+/* .author {} */
+/* .author {} */
+/* div.body {} */ /* rename this */
+.tail-meta {
+    font-size: 80%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+/* .date {} */
+/* .url {} */
+
+.ril_caption, figcaption {
+    display: block;
+    font-size: 80%;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#paper-story table {
+    max-width: 50%;
+}
+table {
+    width: 110%;
+    margin-left: -3%;
+}
+td {
+    padding-bottom: 1mm;
+}
+
+/* Ban list */
+nav,
+.view-sidebar,
+#adspot-interstitial,
+.paywall-panel,
+.prompt-panel,
+.free-trial-prompt,
+.seo-footer, 
+.adWrapper,
+.c-promo-box,
+.bnnr-list, 
+
+/* goodreads */
+.goodreads\.com .rating,
+
+
+/* abc stuff: */
+.abc-net-au aside,
+.abc-net-au .view-wysiwyg,
+.abcLink.search,
+.abc-net-au .view-sidebar, /*this needs the get the changes from my laptop*/
+.abc-net-au img[src="https://res.abc.net.au/bundles/2.2.0/images/icon-search-grey@1x.png"],
+.abc-net-au .view-infosourcebyline
+
+/* amazing ribs */
+img[src="https://amazingribs.com/files/fixed-images/1-gold_82pixels.png"],
+/* Wikipedia */
+.mw-editsection,
+/* new yorker */
+/* afr */
+.afr\.com a.skip-link,
+.afr\.com #ink-login-config
+{
+    display: none;
+}
+
+
+.goodreads\.com img:first-of-type {
+    width: 1.5cm;
+    float: right;
+}
