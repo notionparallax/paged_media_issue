@@ -159,6 +159,10 @@ figure {
     column-gap: 3em;
 }
 
+article.has-code {
+    column-count: 1;
+}
+
 .toc {
     border-bottom: 0.3mm solid black;
     column-count: 2;
@@ -248,7 +252,13 @@ td {
     padding-bottom: 1mm;
 }
 
+.risky-position,
+.risky-position-title {
+    background-color: red;
+}
+
 /* Ban list */
+.boring-hidden,
 nav,
 .view-sidebar,
 #adspot-interstitial,

@@ -6,6 +6,7 @@ window.PagedConfig = {
 document.addEventListener('DOMContentLoaded', function(){ 
 
     // hideBoringExcerpts();
+    tagIfHasCode();
     hydrateImages();
     hydrateImagesBBC();
     
@@ -23,22 +24,19 @@ document.addEventListener('DOMContentLoaded', function(){
 
         afterPageLayout(pageFragment, page, breakToken) {
             let h = pageFragment.querySelector("h1.article-title");
-            if(h !== null) {
-                let pBox = page.element.getBoundingClientRect();
-                let hBox = h.getBoundingClientRect();
-                let pdelta = pBox.bottom - hBox.bottom;
-                let botPC =  pdelta/pBox.height;
-                if (botPC < 0.4) {
-                    breakToken.offset  = 0;
-                    // breakToken.node = h;
-                    // h.parentElement.classList.add("break-before");
-                    window.h = h;
-                    window.p = page;
-                    console.log("pageFragment", pageFragment, "page", page, "breakToken", breakToken);
-                    console.log(h);
-                    console.log(pdelta, botPC,"*****\n\n\n");
+            identifyTooCloseToBottomHeading(h, 0.4, "risky-position-title", page, pageFragment, breakToken);
+
+            h = pageFragment.querySelectorAll("h1:not(.article-title), h2, h3, h4");
+            if (h !== null && h !== undefined) {
+                if(Array.isArray(h) || NodeList.prototype.isPrototypeOf(h)) {
+                    if(h.length>0) {
+                        h.forEach(h => {
+                            identifyTooCloseToBottomHeading(h, 0.1, "risky-position", page, pageFragment, breakToken);
+                        })
+                    }
+                } else {
+                    identifyTooCloseToBottomHeading(h, 0.1, "risky-position", page, pageFragment, breakToken);
                 }
-                
             }
         }
 
@@ -54,6 +52,29 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 
+
+function identifyTooCloseToBottomHeading(h, pc, riskyClass, page, pageFragment, breakToken) {
+    try{
+        if (h !== null && h !== undefined) {
+            let pBox = page.element.getBoundingClientRect();
+            let hBox = h.getBoundingClientRect();
+            let pdelta = pBox.bottom - hBox.bottom;
+            let botPC = pdelta / pBox.height;
+            if (botPC < pc) {
+                // breakToken.offset  = 0;
+                // breakToken.node = h;
+                h.classList.add(riskyClass);
+                window.h = h;
+                window.p = page;
+                // console.log("pageFragment", pageFragment, "page", page, "breakToken", breakToken);
+                // console.log(h);
+                // console.log(pdelta, botPC, "*****\n");
+            }
+        }
+    } catch(e) {
+        console.log(e, h);
+    }
+}
 
 function hydrateImages() {
     document.querySelectorAll("a").forEach((x) => {
@@ -105,6 +126,15 @@ function hideBoringExcerpts() {
         if ((exerpt == firstP) || firstP.includes(exerpt)) {
             console.info("boring:", exerpt);
             x.querySelector(".excerpt").classList.add("boring-hidden");
+        }
+    });
+}
+
+function tagIfHasCode() {
+    document.querySelectorAll(".paper-story").forEach((x) => {
+        let pre = x.getElementsByTagName("pre");
+        if (pre.length>0) {
+            x.classList.add("has-code");
         }
     });
 }
