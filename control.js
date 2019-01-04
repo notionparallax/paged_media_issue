@@ -3,11 +3,12 @@ window.PagedConfig = {
 };
 
 
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function(){ 
 
+    // hideBoringExcerpts();
     hydrateImages();
     hydrateImagesBBC();
-
+    
     document.querySelectorAll(".paper-story").forEach(
         (s)=>footnoteLinks(s.id, s.id)
     );
@@ -16,7 +17,10 @@ window.onload = function() {
         constructor(chunker, polisher, caller) {
             super(chunker, polisher, caller);
         }
-    
+        beforeParsed(content) {
+            console.log("in beforeParsed");
+        }
+
         afterPageLayout(pageFragment, page, breakToken) {
             let h = pageFragment.querySelector("h1.article-title");
             if(h !== null) {
@@ -37,21 +41,18 @@ window.onload = function() {
                 
             }
         }
+
+        afterRendered(pages) {
+            document.querySelector("body").classList = "";
+        }
     }
     Paged.registerHandlers(MyHandler);
 
     setTimeout(function() {
               window.PagedPolyfill.preview();
             }, 1000);
-    
-}
-
-document.addEventListener('readystatechange', () => {
-    console.log(document.readyState);
-    if(document.readyState=="complete") {
-        document.querySelector("body").classList = "";
-    }
 });
+
 
 
 function hydrateImages() {
@@ -92,6 +93,18 @@ function hydrateImagesBBC() {
             fig.appendChild(image);
             fig.appendChild(caption);
             x.replaceWith(fig);
+        }
+    });
+}
+
+function hideBoringExcerpts() {
+    document.querySelectorAll(".paper-story").forEach((x) => {
+        let exerpt = x.querySelector(".excerpt").innerText;
+        let firstP = x.querySelector("p").innerText;
+
+        if ((exerpt == firstP) || firstP.includes(exerpt)) {
+            console.info("boring:", exerpt);
+            x.querySelector(".excerpt").classList.add("boring-hidden");
         }
     });
 }
